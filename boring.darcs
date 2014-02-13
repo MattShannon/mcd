@@ -1,3 +1,7 @@
+\.pyc$
+^build($|/)
+^dist($|/)
 \.c$
 \.so$
-^build($|/)
+^MANIFEST$
+^env($|/)
