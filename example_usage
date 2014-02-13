@@ -1,0 +1,17 @@
+
+# (set-up path; only necessary if package is not installed)
+export PYTHONPATH=.
+
+# a basic MCD computation (no warping)
+cat test_data/corpus.lst | xargs bin/get_mcd_plain test_data/ref-examples test_data/aligned-synth-examples
+
+# similar to above but excluding segments marked as silence
+cat test_data/corpus.lst | xargs bin/get_mcd_plain --remove_segments='.-pau\+' --labels_dir=test_data/aligned-synth-examples/labels test_data/ref-examples test_data/aligned-synth-examples
+
+# an MCD DTW computation (computes the minimum MCD over all valid alignments)
+cat test_data/corpus.lst | xargs bin/get_mcd_dtw test_data/ref-examples test_data/synth-examples
+
+# warp synthesized speech to have similar timing to the reference
+mkdir out
+cat test_data/corpus.lst | xargs bin/dtw_synth test_data/ref-examples test_data/synth-examples out
+
