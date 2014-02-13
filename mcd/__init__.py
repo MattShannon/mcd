@@ -6,4 +6,4 @@
 # See `License` for details of license and warranty.
 
 
-__version__ = '0.2'
+__version__ = '0.3.dev1'
