@@ -2,7 +2,7 @@ mcd
 ===
 
 This package computes mel cepstral distortions in python.
-Mel cepstral distortions are used in assessing the quality of synthetized
+Mel cepstral distortions are used in assessing the quality of synthesized
 speech.
 
 Overview
