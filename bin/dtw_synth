@@ -66,11 +66,11 @@ def main(rawArgs):
         int(paramOrderStr)
         for paramOrderStr in args.paramOrders.split(',')
     ]
-    assert len(paramOrders) == 3
+    assert paramOrders
     mgcParamOrder = paramOrders[0]
 
     exts = args.exts.split(',')
-    assert len(exts) == 3
+    assert len(exts) == len(paramOrders)
     mgcExt = exts[0]
 
     minCostTot = 0.0
