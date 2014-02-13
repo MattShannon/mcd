@@ -45,7 +45,7 @@ else:
 
 setup(
     name='mcd',
-    version='0.1',
+    version='0.2.dev1',
     description='Mel cepstral distortion (MCD) computations in python.',
     url='http://github.com/MattShannon/mcd',
     author='Matt Shannon',
