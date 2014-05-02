@@ -23,12 +23,12 @@ from filecmp import cmpfiles
 # (FIXME : this script currently only works from repo root directory)
 
 class TempDir(object):
-    def __init__(self, prefix = 'mcd.', removeOnException = False):
+    def __init__(self, prefix='mcd.', removeOnException=False):
         self.prefix = prefix
         self.removeOnException = removeOnException
 
     def __enter__(self):
-        self.location = tempfile.mkdtemp(prefix = self.prefix)
+        self.location = tempfile.mkdtemp(prefix=self.prefix)
         return self
 
     def remove(self):
