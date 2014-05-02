@@ -54,7 +54,6 @@ The latest development version of mcd is available from a github repository
 To check that mcd is installed correctly you can run the test suite::
 
     python -m unittest discover mcd
-    PYTHONPATH=. python bin/test_cli.py
 
 Examples
 --------
@@ -79,6 +78,12 @@ To compile the cython part of mcd in the current directory::
     python setup.py build_ext --inplace
 
 This command must be run after every modification to the source ``.pyx`` files.
+
+To run the full test suite, including tests of command-line tools, on the
+working copy::
+
+    python -m unittest discover mcd
+    PYTHONPATH=. python bin/test_cli.py
 
 A note on ``setup.py``
 ----------------------
