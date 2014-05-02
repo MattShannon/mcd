@@ -124,13 +124,13 @@ class TestCliTools(unittest.TestCase):
     def test_get_mcd_plain_exc_pau(self):
         """Simple characterization test for get_mcd_plain excluding pau."""
         uttIds = readUttIds(join('test_data', 'corpus.lst'))
+        labelsDir = join('test_data', 'aligned-synth-examples', 'labels')
         p = subprocess.Popen([
             join('bin', 'get_mcd_plain'),
             '--ext', 'mgc',
             '--param_order', '40',
             '--remove_segments', '.-pau\+',
-            '--labels_dir', join('test_data', 'aligned-synth-examples',
-                                 'labels'),
+            '--labels_dir', labelsDir,
             '--frame_period', '0.005',
             join('test_data', 'ref-examples'),
             join('test_data', 'aligned-synth-examples'),
@@ -138,11 +138,11 @@ class TestCliTools(unittest.TestCase):
         stdout, stderr = p.communicate()
         stdoutGood = (
             'NOTE: removing segments matching regex \'.-pau\+\' using labels'
-            ' in test_data/aligned-synth-examples/labels\n'
+            ' in %s\n'
             'processing cmu_us_arctic_slt_a0003\n'
             'processing cmu_us_arctic_slt_a0044\n'
             'overall MCD = 5.389857 (1157 frames)\n'
-        )
+        ) % labelsDir
         self.assertEqual(stderr, '')
         self.assertEqual(stdout, stdoutGood)
 
