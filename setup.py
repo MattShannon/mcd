@@ -1,7 +1,7 @@
 #!/usr/bin/python
 """A distutils-based script for distributing and installing mcd."""
 
-# Copyright 2014 Matt Shannon
+# Copyright 2014, 2015 Matt Shannon
 
 # This file is part of mcd.
 # See `License` for details of license and warranty.

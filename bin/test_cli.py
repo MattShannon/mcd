@@ -4,7 +4,7 @@ Many of these tests take the form of characterization tests which verify that
 the behaviour does not change but not that it is correct.
 """
 
-# Copyright 2014 Matt Shannon
+# Copyright 2014, 2015 Matt Shannon
 
 # This file is part of mcd.
 # See `License` for details of license and warranty.
