@@ -36,12 +36,16 @@ if dev_mode:
             _sdist.run(self)
 
     cmdclass = {'build_ext': build_ext, 'sdist': sdist}
-    ext_modules = [ Extension('.'.join(loc), [os.path.join(*loc)+'.pyx'])
-                    for loc in cython_locs ]
+    ext_modules = [
+        Extension('.'.join(loc), [os.path.join(*loc)+'.pyx'])
+        for loc in cython_locs
+    ]
 else:
     cmdclass = {}
-    ext_modules = [ Extension('.'.join(loc), [os.path.join(*loc)+'.c'])
-                    for loc in cython_locs ]
+    ext_modules = [
+        Extension('.'.join(loc), [os.path.join(*loc)+'.c'])
+        for loc in cython_locs
+    ]
 
 setup(
     name='mcd',
