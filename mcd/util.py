@@ -4,7 +4,6 @@
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
 import numpy as np
 
 def assert_allclose(actual, desired, rtol=1e-7, atol=1e-14,

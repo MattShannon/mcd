@@ -4,15 +4,14 @@
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
-from mcd import dtw
-from mcd.util import assert_allclose
-
 import unittest
 import math
 import numpy as np
 import random
 from numpy.random import randn, randint
+
+from mcd import dtw
+from mcd.util import assert_allclose
 
 def randBool():
     return randint(0, 2) == 0

@@ -7,16 +7,15 @@
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
-from mcd import util
-from mcd import dtw
-import mcd.metrics_fast as mt
-
 import os
 import sys
 import argparse
 import math
 import numpy as np
+
+from mcd import util
+from mcd import dtw
+import mcd.metrics_fast as mt
 
 def main(rawArgs):
     parser = argparse.ArgumentParser(

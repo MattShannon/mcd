@@ -4,7 +4,6 @@
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
 import numpy as np
 import itertools as it
 

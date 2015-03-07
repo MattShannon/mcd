@@ -4,16 +4,15 @@
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
-import mcd.metrics as mt
-import mcd.metrics_fast as mtf
-from mcd.util import assert_allclose
-
 import unittest
 import math
 import numpy as np
 import random
 from numpy.random import randn, randint
+
+import mcd.metrics as mt
+import mcd.metrics_fast as mtf
+from mcd.util import assert_allclose
 
 def randBool():
     return randint(0, 2) == 0

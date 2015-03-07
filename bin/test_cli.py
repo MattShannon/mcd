@@ -9,7 +9,6 @@ the behaviour does not change but not that it is correct.
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
 import unittest
 import os
 from os.path import join

@@ -5,5 +5,4 @@
 # This file is part of mcd.
 # See `License` for details of license and warranty.
 
-
 __version__ = '0.4.dev1'
