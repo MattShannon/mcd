@@ -126,26 +126,27 @@ class TestCliTools(unittest.TestCase):
     def test_get_mcd_plain_exc_pau(self):
         """Simple characterization test for get_mcd_plain excluding pau."""
         uttIds = readUttIds(join(baseDir, 'test_data', 'corpus.lst'))
-        labelsDir = join(baseDir, 'test_data', 'aligned-synth-examples',
-                         'labels')
+        alignmentDir = join(
+            baseDir, 'test_data', 'aligned-synth-examples', 'alignment'
+        )
         p = subprocess.Popen([
             join(baseDir, 'bin', 'get_mcd_plain'),
             '--ext', 'mgc',
             '--param_order', '40',
             '--remove_segments', '.-pau\+',
-            '--labels_dir', labelsDir,
+            '--alignment_dir', alignmentDir,
             '--frame_period', '0.005',
             join(baseDir, 'test_data', 'ref-examples'),
             join(baseDir, 'test_data', 'aligned-synth-examples'),
         ] + uttIds, stdout=PIPE, stderr=PIPE)
         stdout, stderr = p.communicate()
         stdoutGood = (
-            'NOTE: removing segments matching regex \'.-pau\+\' using labels'
-            ' in %s\n'
+            'NOTE: removing segments matching regex \'.-pau\+\' using'
+            ' alignments in %s\n'
             'processing cmu_us_arctic_slt_a0003\n'
             'processing cmu_us_arctic_slt_a0044\n'
             'overall MCD = 5.389857 (1157 frames)\n'
-        ) % labelsDir
+        ) % alignmentDir
         self.assertEqual(stderr, '')
         self.assertEqual(stdout, stdoutGood)
 

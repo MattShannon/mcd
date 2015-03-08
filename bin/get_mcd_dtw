@@ -13,6 +13,9 @@ import argparse
 import math
 import numpy as np
 
+from htk_io.base import DirReader
+import htk_io.vecseq as vsio
+
 from mcd import util
 from mcd import dtw
 import mcd.metrics_fast as mt
@@ -59,18 +62,16 @@ def main(rawArgs):
 
     costFn = mt.logSpecDbDist
 
+    vecSeqIo = vsio.VecSeqIo(args.paramOrder)
+    getNatVecSeq = DirReader(vecSeqIo, args.natDir, args.ext)
+    getSynthVecSeq = DirReader(vecSeqIo, args.synthDir, args.ext)
+
     minCostTot = 0.0
     framesTot = 0
     for uttId in args.uttIds:
         print 'processing', uttId
-        nat = util.readParamFileAlt(
-            os.path.join(args.natDir, uttId+'.'+args.ext),
-            paramOrder=args.paramOrder
-        )
-        synth = util.readParamFileAlt(
-            os.path.join(args.synthDir, uttId+'.'+args.ext),
-            paramOrder=args.paramOrder
-        )
+        nat = getNatVecSeq(uttId)
+        synth = getSynthVecSeq(uttId)
         # ignore 0th cepstral component
         nat = nat[:, 1:]
         synth = synth[:, 1:]

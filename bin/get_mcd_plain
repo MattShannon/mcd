@@ -14,6 +14,10 @@ import re
 import math
 import numpy as np
 
+from htk_io.base import DirReader
+import htk_io.alignment as alio
+import htk_io.vecseq as vsio
+
 from mcd import util
 import mcd.metrics_fast as mt
 
@@ -49,11 +53,11 @@ def main(rawArgs):
         help='regex of segment labels to remove'
     )
     parser.add_argument(
-        '--labels_dir', dest='labelsDir', default=None,
-        metavar='LABELSDIR',
+        '--alignment_dir', dest='alignmentDir', default=None,
+        metavar='ALIGNMENTDIR',
         help=(
-            'directory containing phone-level label files (used for segment'
-            ' removal)'
+            'directory containing phone-level alignment files (used for'
+            ' segment removal)'
         )
     )
     parser.add_argument(
@@ -74,27 +78,28 @@ def main(rawArgs):
         help='utterance ids (ext will be appended to these)'
     )
     args = parser.parse_args(rawArgs[1:])
-    assert (args.removeSegments is None) == (args.labelsDir is None)
+    assert (args.removeSegments is None) == (args.alignmentDir is None)
     if args.removeSegments is not None:
-        print ('NOTE: removing segments matching regex \'%s\' using labels in'
-               ' %s' % (args.removeSegments, args.labelsDir))
+        print ('NOTE: removing segments matching regex \'%s\' using alignments'
+               ' in %s' % (args.removeSegments, args.alignmentDir))
     reRemoveSegments = (None if args.removeSegments is None
                         else re.compile(args.removeSegments))
 
     costFn = mt.logSpecDbDist
 
+    alignmentIo = alio.AlignmentIo(args.framePeriod)
+    getAlignment = DirReader(alignmentIo, args.alignmentDir, 'lab')
+
+    vecSeqIo = vsio.VecSeqIo(args.paramOrder)
+    getNatVecSeq = DirReader(vecSeqIo, args.natDir, args.ext)
+    getSynthVecSeq = DirReader(vecSeqIo, args.synthDir, args.ext)
+
     costTot = 0.0
     framesTot = 0
     for uttId in args.uttIds:
         print 'processing', uttId
-        nat = util.readParamFileAlt(
-            os.path.join(args.natDir, uttId+'.'+args.ext),
-            paramOrder=args.paramOrder
-        )
-        synth = util.readParamFileAlt(
-            os.path.join(args.synthDir, uttId+'.'+args.ext),
-            paramOrder=args.paramOrder
-        )
+        nat = getNatVecSeq(uttId)
+        synth = getSynthVecSeq(uttId)
         # ignore 0th cepstral component
         nat = nat[:, 1:]
         synth = synth[:, 1:]
@@ -108,10 +113,7 @@ def main(rawArgs):
             ])
             frames = len(nat)
         else:
-            alignment = util.readLabFile(
-                os.path.join(args.labelsDir, uttId+'.lab'),
-                framePeriod=args.framePeriod
-            )
+            alignment = getAlignment(uttId)
             alignmentInclude = [
                 (startTime, endTime, not reRemoveSegments.search(label))
                 for startTime, endTime, label in alignment

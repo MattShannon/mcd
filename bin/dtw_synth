@@ -13,6 +13,9 @@ import argparse
 import math
 import numpy as np
 
+from htk_io.base import DirReader
+import htk_io.vecseq as vsio
+
 from mcd import util
 from mcd import dtw
 import mcd.metrics_fast as mt
@@ -72,18 +75,16 @@ def main(rawArgs):
     assert len(exts) == len(paramOrders)
     mgcExt = exts[0]
 
+    vecSeqIo = vsio.VecSeqIo(mgcParamOrder)
+    getNatVecSeq = DirReader(vecSeqIo, args.natDir, mgcExt)
+    getSynthVecSeq = DirReader(vecSeqIo, args.synthDir, mgcExt)
+
     minCostTot = 0.0
     framesTot = 0
     for uttId in args.uttIds:
         print 'processing', uttId
-        nat = util.readParamFileAlt(
-            os.path.join(args.natDir, uttId+'.'+mgcExt),
-            paramOrder=mgcParamOrder
-        )
-        synth = util.readParamFileAlt(
-            os.path.join(args.synthDir, uttId+'.'+mgcExt),
-            paramOrder=mgcParamOrder
-        )
+        nat = getNatVecSeq(uttId)
+        synth = getSynthVecSeq(uttId)
         # ignore 0th cepstral component
         nat = nat[:, 1:]
         synth = synth[:, 1:]
@@ -109,16 +110,15 @@ def main(rawArgs):
         print
 
         for paramOrder, ext in zip(paramOrders, exts):
-            synthFull = util.readParamFileAlt(
-                os.path.join(args.synthDir, uttId+'.'+ext),
-                paramOrder=paramOrder
-            )
+            vecSeqIo = vsio.VecSeqIo(paramOrder)
+
+            synthFullFile = os.path.join(args.synthDir, uttId+'.'+ext)
+            synthFull = vecSeqIo.readFile(synthFullFile)
+
             synthFullWarped = dtw.warpGeneral(synthFull, synthIndexSeq)
-            util.writeParamFile(
-                synthFullWarped,
-                os.path.join(args.outDir, uttId+'.'+ext),
-                paramOrder=paramOrder
-            )
+
+            synthFullWarpedFile = os.path.join(args.outDir, uttId+'.'+ext)
+            vecSeqIo.writeFile(synthFullWarpedFile, synthFullWarped)
 
     print 'overall MCD = %f (%d frames)' % (minCostTot / framesTot, framesTot)
 
