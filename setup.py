@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""A distutils-based script for distributing and installing mcd."""
+"""A setuptools-based script for distributing and installing mcd."""
 
 # Copyright 2014, 2015 Matt Shannon
 
@@ -7,9 +7,9 @@
 # See `License` for details of license and warranty.
 
 import os
-from distutils.core import setup
-from distutils.extension import Extension
-from distutils.command.sdist import sdist as _sdist
+from setuptools import setup
+from setuptools.extension import Extension
+from setuptools.command.sdist import sdist as _sdist
 
 cython_locs = [
     ('mcd', 'metrics_fast'),
@@ -17,6 +17,8 @@ cython_locs = [
 
 with open('README.rst') as readme_file:
     long_description = readme_file.read()
+
+requires = [ line.rstrip('\n') for line in open('requirements.txt') ]
 
 # see "A note on setup.py" in README.rst for an explanation of the dev file
 dev_mode = os.path.exists('dev')
@@ -58,6 +60,7 @@ setup(
     author_email='matt.shannon@cantab.net',
     license='3-clause BSD (see License file)',
     packages=['mcd'],
+    install_requires=requires,
     scripts=[
         os.path.join('bin', 'dtw_synth'),
         os.path.join('bin', 'get_mcd_dtw'),
