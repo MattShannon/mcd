@@ -11,8 +11,8 @@ before_install:
   - sudo apt-get -qq install cython python-numpy
 
 install:
-  - python setup.py build_ext --inplace
+  - pip install -e .
 
 script:
   - python -m unittest discover mcd
-  - PYTHONPATH=. python bin/test_cli.py
+  - python bin/test_cli.py
