@@ -57,13 +57,13 @@ setup(
     author='Matt Shannon',
     author_email='matt.shannon@cantab.net',
     license='3-clause BSD (see License file)',
-    packages = ['mcd'],
+    packages=['mcd'],
     scripts=[
         os.path.join('bin', 'dtw_synth'),
         os.path.join('bin', 'get_mcd_dtw'),
         os.path.join('bin', 'get_mcd_plain'),
     ],
-    long_description = long_description,
-    cmdclass = cmdclass,
-    ext_modules = ext_modules,
+    long_description=long_description,
+    cmdclass=cmdclass,
+    ext_modules=ext_modules,
 )
