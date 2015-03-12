@@ -38,15 +38,23 @@ mcd.
 Installation
 ------------
 
-For most purposes the simplest way to install mcd is to use pip::
+For most purposes the simplest way to install mcd is to use pip.
+For example in Debian and Ubuntu::
 
+    sudo apt-get install python-numpy
     sudo pip install mcd
 
-This installs the latest released version of
-`mcd on PyPI <https://pypi.python.org/pypi/mcd>`_.
-Alternatively you can download mcd from PyPI and install it using::
+The first command installs numpy from the system repository, since installing
+numpy using pip is generally not recommended.
+The second command installs the latest released version of
+`mcd on PyPI <https://pypi.python.org/pypi/mcd>`_, together with any currently
+uninstalled python packages required by mcd.
 
-    sudo python setup.py install
+mcd can also be installed in a virtualenv::
+
+    sudo apt-get install python-numpy
+    virtualenv --system-site-packages env
+    env/bin/pip install mcd
 
 The latest development version of mcd is available from a github repository
 (see below).
@@ -72,6 +80,11 @@ To obtain the latest source code using git::
 Development is in fact done using `darcs <http://darcs.net/>`_, with the darcs
 repository converted to a git repository using
 `darcs-to-git <https://github.com/purcell/darcs-to-git>`_.
+
+To install any currently uninstalled python packages required by mcd::
+
+    sudo apt-get install cython python-numpy
+    sudo pip install -r requirements.txt
 
 To compile the cython part of mcd in the current directory::
 
