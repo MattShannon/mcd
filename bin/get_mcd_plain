@@ -116,7 +116,7 @@ def main(rawArgs):
             alignment = getAlignment(uttId)
             alignmentInclude = [
                 (startTime, endTime, not reRemoveSegments.search(label))
-                for startTime, endTime, label in alignment
+                for startTime, endTime, label, _ in alignment
             ]
             includeFrames = list(util.expandAlignment(alignmentInclude))
             assert len(includeFrames) == len(nat)
