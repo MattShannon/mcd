@@ -12,6 +12,7 @@ the behaviour does not change but not that it is correct.
 import unittest
 import os
 from os.path import join
+import sys
 import logging
 import subprocess
 from subprocess import PIPE
@@ -56,6 +57,7 @@ class TestCliTools(unittest.TestCase):
         with TempDir() as tempDir:
             synthOutDir = tempDir.location
             p = subprocess.Popen([
+                sys.executable,
                 join(baseDir, 'bin', 'dtw_synth'),
                 '--exts', 'mgc,lf0,bap',
                 '--param_orders', '40,1,5',
@@ -89,6 +91,7 @@ class TestCliTools(unittest.TestCase):
         """Simple characterization test for get_mcd_dtw."""
         uttIds = readUttIds(join(baseDir, 'test_data', 'corpus.lst'))
         p = subprocess.Popen([
+            sys.executable,
             join(baseDir, 'bin', 'get_mcd_dtw'),
             '--ext', 'mgc',
             '--param_order', '40',
@@ -108,6 +111,7 @@ class TestCliTools(unittest.TestCase):
         """Simple characterization test for get_mcd_plain."""
         uttIds = readUttIds(join(baseDir, 'test_data', 'corpus.lst'))
         p = subprocess.Popen([
+            sys.executable,
             join(baseDir, 'bin', 'get_mcd_plain'),
             '--ext', 'mgc',
             '--param_order', '40',
@@ -130,6 +134,7 @@ class TestCliTools(unittest.TestCase):
             baseDir, 'test_data', 'aligned-synth-examples', 'alignment'
         )
         p = subprocess.Popen([
+            sys.executable,
             join(baseDir, 'bin', 'get_mcd_plain'),
             '--ext', 'mgc',
             '--param_order', '40',
