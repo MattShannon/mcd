@@ -7,6 +7,7 @@
 # See `License` for details of license and warranty.
 
 import os
+import numpy as np
 from setuptools import setup
 from setuptools.extension import Extension
 from setuptools.command.sdist import sdist as _sdist
@@ -40,14 +41,16 @@ if dev_mode:
     cmdclass = {'build_ext': build_ext, 'sdist': sdist}
     ext_modules = [
         Extension('.'.join(loc), [os.path.join(*loc)+'.pyx'],
-                  extra_compile_args=['-Wno-unused-but-set-variable', '-O3'])
+                  extra_compile_args=['-Wno-unused-but-set-variable', '-O3'],
+                  include_dirs=[np.get_include()])
         for loc in cython_locs
     ]
 else:
     cmdclass = {}
     ext_modules = [
         Extension('.'.join(loc), [os.path.join(*loc)+'.c'],
-                  extra_compile_args=['-Wno-unused-but-set-variable', '-O3'])
+                  extra_compile_args=['-Wno-unused-but-set-variable', '-O3'],
+                  include_dirs=[np.get_include()])
         for loc in cython_locs
     ]
 
